@@ -8,7 +8,7 @@ and produces a “refolded” reco histogram whose error bands incorporate the u
 
 ## What problem this solves
 
-In many workflows, uncertainties are evaluated in reco space directly (error bands on a reco histogram `R`). Interaction models uncertainties are implemented by varying the truth space histograms, and need to be propagated to reco space. If the truth variatios are propagated driectly, this leads to a overestimation of the uncertainty, becaue it catches the intrinsic variation of the model rather than **the way in which the model variations affect detector response**, which is what we are interested in. The errors are propagated to reco space correctly by using the truth CV histogram and the varied migration matrix and efficiency histogram. 
+In many workflows, uncertainties are evaluated in reco space directly (error bands on a reco histogram `R`). Interaction models uncertainties are implemented by varying the truth space histograms,[...]
 
 These scripts build a reco-space histogram with more correct error bars, often referred to here as **R† (“R-dagger”)**.
 Starting from:
@@ -23,13 +23,13 @@ The error propagation is done in one of two ways:
 
   Where `⊙`  is elementwise multiplication
 
-2. If the truth CV histogram is not available, unfold the reco hsitogram **R** to a true-space estimate **W**, then for each systematic universe `*`, refold using that universe’s response/efficiency
+2. If the truth CV histogram is not available, unfold the reco hsitogram **R** to a true-space estimate **W**, then for each systematic universe `*`, refold using that universe’s response/efficiency:
 
   `R† = U* · (E* ⊙ W)`
 
 
 The output is a reco-space histogram with systematic error bands that have been propagated through the
-unfold/refold procedure. The ``traditionally'' propagated histograms (`R† = U* · (E* ⊙ T*)`) are also saved to the output file, so the user can chose to use them instead. This can be useful for some error bands like the Flux or Target Mass, which are implemented at truth level for convenience but the truth variation should be propagated as well
+unfold/refold procedure. The ``traditionally'' propagated histograms (`R† = U* · (E* ⊙ T*)`) are also saved to the output file, so the user can chose to use them instead. This can be useful f[...]
 
 ## Contents
 
@@ -39,6 +39,8 @@ unfold/refold procedure. The ``traditionally'' propagated histograms (`R† = U*
   - Moore–Penrose pseudoinverse (`numpy.linalg.pinv`)
   - Tikhonov regularization solver
 - `run_create_reco_errors.sh`, `run_create_reco_errors_data.sh` — example launch scripts (paths are site/user-specific)
+- `null_test.py` — quick null/sanity test to validate your environment + refold/unfold plumbing
+- `python_utils.py` — shared helper utilities used across scripts (I/O, histogram helpers, plotting, convenience functions)
 
 ## Requirements
 
@@ -130,6 +132,14 @@ python3 create_reco_errors_data.py \
   --migration Migration.root \
   --efficiency Efficiency.root \
   --lam 1e-6
+```
+
+## Quick validation
+
+Run the null test to make sure your environment and MAT/ROOT bindings are set up correctly:
+
+```bash
+python3 null_test.py
 ```
 
 ## Notes / caveats
