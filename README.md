@@ -15,13 +15,25 @@ These scripts build a reco-space histogram often referred to here as **R† (“
 
 - Start from a migration/response matrix **U** (reco × true)
 - Unfold a reco distribution **R** to a true-space estimate **W**
-- For each systematic universe `*`, refold using that universe’s response/efficiency:
+- For each systematic universe `*`, refold using that universe’s response/efficiency
 
-\[
-R^{\dagger}_* = U_* \,(E_* \odot W)\
-\]
+**Math (GitHub-friendly)**
 
-where **E** is the efficiency (applied in true space) and `⊙` is elementwise multiplication.
+Inline form:
+
+- `R†_* = U_* · (E_* ⊙ W)`
+
+Expanded:
+
+- `R^{\dagger}_* = U_* (E_* \odot W)`
+
+Where:
+
+- `E` is the efficiency (applied in true space)
+- `⊙` / `\odot` is elementwise multiplication
+
+> Note: GitHub’s Markdown renderer does **not** support `\[ ... \]` LaTeX blocks by default. The equations above
+> are written in Unicode/plaintext and LaTeX-as-text so they render consistently.
 
 The output is a reco-space histogram with systematic error bands that have been propagated through the
 unfold/refold procedure.
