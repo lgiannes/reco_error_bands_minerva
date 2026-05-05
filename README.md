@@ -50,10 +50,6 @@ These scripts assume an analysis environment that provides:
 - `numpy`, `matplotlib`
 - **PyROOT/ROOT**
 - **PlotUtils** (MINERvA)
-- Your analysis helpers such as `python_utils`
-
-Note: the code imports a local module `null_test` (e.g. `flatten_mnvh2d`, `mnvh2d_from_flattened`, plotting helpers).
-That module is **not currently in this repository**, so you will need it on `PYTHONPATH` or add it to this repo.
 
 ## Inputs (ROOT objects expected)
 
@@ -144,6 +140,7 @@ python3 null_test.py
 
 ## Notes / caveats
 
+- I haven't used create_reco_errors_data.py in my analysis, so that should require further validation from future users. Although the structure is identical to create_reco_errors.py
 - The code currently has a `TEST_MODE` flag (see `create_reco_errors.py`) that restricts processed error bands.
   Set to `False` to process all bands.
 - Some bin-indexing in `invert_migration_matrix.py` uses ROOT bin numbering directly; double-check indexing
